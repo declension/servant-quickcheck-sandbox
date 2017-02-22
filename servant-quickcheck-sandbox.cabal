@@ -1,0 +1,54 @@
+name:                servant-quickcheck-sandbox
+version:             0.1.0.0
+-- synopsis:
+-- description:
+homepage:            https://github.com/declension/servant-quickcheck-sandbox#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Nick Boultbee
+maintainer:          nick@declension.net
+copyright:           All Rights Reserved
+category:            value
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Api
+  build-depends:       base >= 4.7 && < 5
+                     , text
+                     , servant-quickcheck
+                     , servant-server
+                     , servant
+                     , aeson
+
+  default-language:    Haskell2010
+
+executable servant-quickcheck-sandbox
+  hs-source-dirs:      app
+  main-is:             Main.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  build-depends:       base
+                     , servant-quickcheck-sandbox
+                     , servant-client >= 0.9
+                     , http-client
+  default-language:    Haskell2010
+
+test-suite servant-quickcheck-sandbox-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  other-modules:       StackOverflowSpec, ApiSpec
+  build-depends:       base
+                       , text
+                     , servant-quickcheck-sandbox
+                     , hspec
+                     , QuickCheck
+                     , servant-quickcheck
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/declension/servant-quickcheck-sandbox
