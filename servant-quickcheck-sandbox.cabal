@@ -1,7 +1,5 @@
 name:                servant-quickcheck-sandbox
 version:             0.1.0.0
--- synopsis:
--- description:
 homepage:            https://github.com/declension/servant-quickcheck-sandbox#readme
 license:             BSD3
 license-file:        LICENSE
@@ -19,9 +17,10 @@ library
   build-depends:       base >= 4.7 && < 5
                      , text
                      , servant-quickcheck
-                     , servant-server
-                     , servant
+                     , servant-server >= 0.9
+                     , servant >= 0.9
                      , aeson
+                     , bytestring
 
   default-language:    Haskell2010
 
@@ -30,6 +29,7 @@ executable servant-quickcheck-sandbox
   main-is:             Main.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
+                     , text
                      , servant-quickcheck-sandbox
                      , servant-client >= 0.9
                      , http-client
@@ -41,7 +41,7 @@ test-suite servant-quickcheck-sandbox-test
   main-is:             Spec.hs
   other-modules:       StackOverflowSpec, ApiSpec
   build-depends:       base
-                       , text
+                     , text
                      , servant-quickcheck-sandbox
                      , hspec
                      , QuickCheck

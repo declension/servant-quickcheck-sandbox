@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 module ApiSpec where
 
 import Test.Hspec
@@ -9,8 +10,16 @@ import Api
 burl = BaseUrl Http "localhost" 8080 ""
 
 spec :: Spec
-spec = describe "The dummy API" $ do
-    it "doesn't return 500" $ do
-      serverSatisfies testApi burl stdArgs { chatty = True}
+--spec = do
+--    it "Dummy API doesn't return 500" $
+--      serverSatisfies testApi burl stdArgs
+--        (not500
+--         <%> mempty)
+
+spec = it "Query String API doesn't return 500" $
+      serverSatisfies qsApi burl stdArgs
         (not500
          <%> mempty)
+
+instance Arbitrary SafeText
+    where arbitrary = return $ SafeText "value"

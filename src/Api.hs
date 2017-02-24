@@ -16,13 +16,16 @@ type StackOverflowAPI =
     "tags"
         :> QueryParam "site" SiteString
         :> QueryParam "inname" SearchTerm
-        :> Get '[JSON] [Tag]
+        :> Get '[JSON] TagResponse
+
+data TagResponse = TagResponse {
+  items :: [Tag]
+} deriving (Eq, Show, Read, FromJSON, Generic)
 
 data Tag = Tag {
   name :: Text,
   count :: Int,
-  has_synonyms :: Bool,
-  is_moderator_only :: Bool
+  has_synonyms :: Bool
 } deriving (Eq, Show, Read, FromJSON, Generic)
 
 newtype SiteString = SiteString Text
@@ -35,9 +38,17 @@ instance ToHttpApiData SearchTerm
   where toUrlPiece (SearchTerm st) = st
 
 -- Dummy stuff
-type TestAPI = "/path" :> "/sub" :> Get '[JSON] Int
+type TestAPI = "path" :> "sub" :> Get '[JSON] Text
 testApi :: Proxy TestAPI
 testApi = Proxy
+
+type QueryStringAPI = "path" :> QueryParam "one" SafeText :> QueryParam "two" SafeText :> Get '[JSON] Text
+qsApi:: Proxy QueryStringAPI
+qsApi = Proxy
+
+newtype SafeText = SafeText Text
+instance ToHttpApiData SafeText
+  where toUrlPiece (SafeText st) = st
 
 
 soApi :: Proxy StackOverflowAPI
