@@ -3,7 +3,7 @@ module StackOverflowSpec where
 
 import Test.Hspec
 import Servant.QuickCheck
-import Test.QuickCheck (Arbitrary, arbitrary, stdArgs)
+import Test.QuickCheck (Arbitrary, arbitrary, stdArgs, elements)
 
 import Api
 
@@ -11,20 +11,18 @@ import Api
 burl = BaseUrl Http "localhost" 8080 "/2.2"
 
 spec :: Spec
-spec = return ()
---spec = describe "The Stack Overflow API" $
---    it "returns JSON successfully" $
---      serverSatisfies soApi burl stdArgs
---        (not500
---         <%> onlyJsonObjects
---         <%> mempty)
+spec = describe "The Stack Overflow API" $
+    it "returns JSON objects without error" $
+      serverSatisfies soApi burl stdArgs
+        (not500
+         <%> onlyJsonObjects
+         <%> mempty)
 
 
-instance Arbitrary SiteString
-  where arbitrary = return $ SiteString "stackoverflow"
+instance Arbitrary SiteName
+  where arbitrary = return $ SiteName "stackoverflow"
 
 instance Arbitrary SearchTerm
   where arbitrary = do
---                        t <- arbitrary
---                        return $ SearchTerm (T.pack t)
-                        return $ SearchTerm "haskell"
+          term <- elements ["haskell", "quickcheck", "servant"]
+          return (SearchTerm term)

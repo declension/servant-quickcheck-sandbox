@@ -9,12 +9,12 @@ import Network.HTTP.Client (newManager, defaultManagerSettings, managerModifyReq
 import Api
 
 -- Set up the API client with pattern matching
-getTags :: Maybe SiteString -> Maybe SearchTerm -> ClientM TagResponse
+getTags :: Maybe SiteName -> Maybe SearchTerm -> ClientM TagResponse
 getTags = client soApi
 
 query :: ClientM [Tag]
 query = do
-  tags <- getTags (Just $ SiteString "stackoverflow") (Just $ SearchTerm "haskell")
+  tags <- getTags (Just $ SiteName "stackoverflow") (Just $ SearchTerm "haskell")
   return $ items tags
 
 logIt :: Show a => a -> IO a

@@ -14,7 +14,7 @@ import GHC.Generics
 
 type StackOverflowAPI =
     "tags"
-        :> QueryParam "site" SiteString
+        :> QueryParam "site" SiteName
         :> QueryParam "inname" SearchTerm
         :> Get '[JSON] TagResponse
 
@@ -26,16 +26,19 @@ data Tag = Tag {
   name :: Text,
   count :: Int,
   has_synonyms :: Bool
-} deriving (Eq, Show, Read, FromJSON, Generic)
+} deriving (Eq, Show, Read, Generic, FromJSON)
 
-newtype SiteString = SiteString Text
-instance ToHttpApiData SiteString
-  where toUrlPiece (SiteString ss) = ss
+newtype SiteName = SiteName Text
+instance ToHttpApiData SiteName
+  where toUrlPiece (SiteName ss) = ss
 
 
 newtype SearchTerm = SearchTerm Text
 instance ToHttpApiData SearchTerm
   where toUrlPiece (SearchTerm st) = st
+
+soApi :: Proxy StackOverflowAPI
+soApi = Proxy
 
 -- Dummy stuff
 type TestAPI = "path" :> "sub" :> Get '[JSON] Text
@@ -49,7 +52,3 @@ qsApi = Proxy
 newtype SafeText = SafeText Text
 instance ToHttpApiData SafeText
   where toUrlPiece (SafeText st) = st
-
-
-soApi :: Proxy StackOverflowAPI
-soApi = Proxy

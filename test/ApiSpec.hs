@@ -10,14 +10,9 @@ import Api
 burl = BaseUrl Http "localhost" 8080 ""
 
 spec :: Spec
---spec = do
---    it "Dummy API doesn't return 500" $
---      serverSatisfies testApi burl stdArgs
---        (not500
---         <%> mempty)
-
-spec = it "Query String API doesn't return 500" $
-      serverSatisfies qsApi burl stdArgs
+spec = do
+    it "Dummy API doesn't return 500" $
+      serverSatisfies testApi burl stdArgs
         (not500
          <%> mempty)
 

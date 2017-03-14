@@ -4,13 +4,10 @@ packages:
 - '.'
 extra-deps:
 - aeson-1.1.0.0
-- http-api-data-0.3.5
-- integer-logarithms-1.0.1
+- hspec-2.3.2
+- hspec-core-2.3.2
+- hspec-discover-2.3.2
 - primitive-0.6.2.0
-- scientific-0.3.4.10
-- servant-0.9.1.1
-- servant-client-0.9.1.1
-- servant-quickcheck-0.0.2.2
-- servant-server-0.9.1.1
+- servant-quickcheck-0.0.2.4
 - vector-0.12.0.0
-resolver: lts-7.19
+resolver: lts-8.5
