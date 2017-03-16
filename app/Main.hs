@@ -6,11 +6,11 @@ import qualified Data.Text.IO as TIO
 import Servant.Client
 import Network.HTTP.Client (newManager, defaultManagerSettings, managerModifyRequest)
 
-import StackOverflowApi
+import StackExchangeApi
 
 -- Set up the API client with pattern matching
 getTags :: Maybe SiteName -> Maybe SearchTerm -> ClientM TagResponse
-getTags = client soApi
+getTags = client api
 
 query :: ClientM [Tag]
 query = do

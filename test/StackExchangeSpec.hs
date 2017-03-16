@@ -1,19 +1,19 @@
 {-# LANGUAGE OverloadedStrings #-}
-module StackOverflowSpec where
+module StackExchangeSpec where
 
 import Test.Hspec
 import Servant.QuickCheck
 import Test.QuickCheck (Arbitrary, arbitrary, stdArgs, elements)
 
-import StackOverflowApi
+import StackExchangeApi
 
---burl = BaseUrl Https "api.stackexchange.com" 80 "2.2"
+-- Let's test locally for now...
 baseUrl = BaseUrl Http "localhost" 8080 "/2.2"
 
 spec :: Spec
-spec = describe "The Stack Overflow API" $
+spec = describe "The Stack Exchange API" $
     it "returns JSON objects without error" $
-      serverSatisfies soApi baseUrl stdArgs
+      serverSatisfies api baseUrl stdArgs
         (not500
          <%> onlyJsonObjects
          <%> mempty)
