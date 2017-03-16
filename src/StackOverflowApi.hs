@@ -3,7 +3,7 @@
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE DeriveGeneric #-}
 
-module Api where
+module StackOverflowApi where
 
 import Data.Text
 import Data.Aeson (FromJSON)
@@ -20,12 +20,11 @@ type StackOverflowAPI =
 
 data TagResponse = TagResponse {
   items :: [Tag]
-} deriving (Eq, Show, Read, FromJSON, Generic)
+} deriving (Eq, Show, Read, Generic, FromJSON)
 
 data Tag = Tag {
   name :: Text,
-  count :: Int,
-  has_synonyms :: Bool
+  count :: Int
 } deriving (Eq, Show, Read, Generic, FromJSON)
 
 newtype SiteName = SiteName Text
@@ -39,16 +38,3 @@ instance ToHttpApiData SearchTerm
 
 soApi :: Proxy StackOverflowAPI
 soApi = Proxy
-
--- Dummy stuff
-type TestAPI = "path" :> "sub" :> Get '[JSON] Text
-testApi :: Proxy TestAPI
-testApi = Proxy
-
-type QueryStringAPI = "path" :> QueryParam "one" SafeText :> QueryParam "two" SafeText :> Get '[JSON] Text
-qsApi:: Proxy QueryStringAPI
-qsApi = Proxy
-
-newtype SafeText = SafeText Text
-instance ToHttpApiData SafeText
-  where toUrlPiece (SafeText st) = st

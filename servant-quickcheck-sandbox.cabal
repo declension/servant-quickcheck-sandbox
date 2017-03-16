@@ -13,7 +13,7 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Api
+  exposed-modules:     StackOverflowApi
   build-depends:       base >= 4.7 && < 5
                      , text
                      , servant-quickcheck
@@ -39,7 +39,7 @@ test-suite servant-quickcheck-sandbox-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
-  other-modules:       StackOverflowSpec, ApiSpec
+  other-modules:       StackOverflowSpec
   build-depends:       base
                      , text
                      , servant-quickcheck-sandbox
