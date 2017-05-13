@@ -4,6 +4,7 @@ module Main where
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import           Data.Monoid ((<>))
+import           Data.Maybe (listToMaybe, fromMaybe)
 import           Network.HTTP.Client (newManager, defaultManagerSettings, managerModifyRequest)
 import           System.Environment (getArgs)
 import           Servant.Client
@@ -35,17 +36,14 @@ logIt req = print req >> return req
 
 main :: IO ()
 main = do
-  args <- getArgs
-  let st = case args of
-       s : _ -> T.pack s
-       []    -> ""
+  search <- fmap (maybe "" (T.pack . listToMaybe)) getArgs
   manager <- newManager defaultManagerSettings {managerModifyRequest = logIt}
-  tagRes <- runClientM (queryTags (SearchTerm st)) (ClientEnv manager baseUrl)
+  tagRes <- runClientM (queryTags (SearchTerm search)) (ClientEnv manager baseUrl)
   case tagRes of
     Left err   -> fail (show err)
     Right theTags -> mapM_ (TIO.putStrLn . name) theTags
 
-  qsRes <- runClientM (queryQs (TagName st)) (ClientEnv manager baseUrl)
+  qsRes <- runClientM (queryQs (TagName search)) (ClientEnv manager baseUrl)
   case qsRes of
       Left err   -> fail (show err)
       Right theQs -> mapM_ (TIO.putStrLn . formatQuestion) theQs
