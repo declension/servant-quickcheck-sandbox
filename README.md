@@ -1,5 +1,7 @@
 # servant-quickcheck-sandbox
 
+[![Build Status](https://travis-ci.org/declension/servant-quickcheck-sandbox.svg?branch=master)](https://travis-ci.org/declension/servant-quickcheck-sandbox)
+
 Playground for the Haskell libraries [servant](https://github.com/haskell-servant/) / [servant-quickcheck](https://github.com/haskell-servant/servant-quickcheck).
 
 See the blog articles:
