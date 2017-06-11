@@ -36,7 +36,8 @@ logIt req = print req >> return req
 
 main :: IO ()
 main = do
-  search <- fmap (maybe "" (T.pack . listToMaybe)) getArgs
+  args <- getArgs
+  let search = maybe "" T.pack $ listToMaybe args
   manager <- newManager defaultManagerSettings {managerModifyRequest = logIt}
   tagRes <- runClientM (queryTags (SearchTerm search)) (ClientEnv manager baseUrl)
   case tagRes of
